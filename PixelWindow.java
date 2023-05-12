@@ -94,9 +94,12 @@ class SetPixel extends JPanel {
         // areafill.ScanLineFill(300, 300, pixels);
 
         // SacanLineSandFill
-        areafill.SeedFill(pixels, new Point(300, 75), 600, Color.red.getRGB(), 0, Color.cyan.getRGB());
-        areafill.SeedFill(pixels, new Point(295, 193), 600, Color.red.getRGB(), 0, Color.yellow.getRGB());
-        areafill.SeedFill(pixels, new Point(298, 301), 600, Color.red.getRGB(), 0, Color.green.getRGB());
+        areafill.SeedFill(pixels, new Point(300, 75), 600, Color.red.getRGB(), 0,
+                Color.cyan.getRGB());
+        areafill.SeedFill(pixels, new Point(295, 193), 600, Color.red.getRGB(), 0,
+                Color.yellow.getRGB());
+        areafill.SeedFill(pixels, new Point(298, 301), 600, Color.red.getRGB(), 0,
+                Color.green.getRGB());
 
         // ShowImage
         ImageProducer ip_interior = new MemoryImageSource(600, 600, pixels, 0, 600);
