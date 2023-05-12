@@ -15,7 +15,7 @@ public class DrawLine {
         x = (float) x1;
         y = (float) y1;
         for (int i = 0; i < k; i++) {
-            g.drawLine((int) (x1 + 0.5f), (int) (y1 + 0.5f), (int) (x2 + 0.5f), (int) (y2 + 0.5f));
+            g.drawLine((int) (x + 0.5f), (int) (y + 0.5f), (int) (x + 0.5f), (int) (y + 0.5f));
             x += dx;
             y += dy;
         }
