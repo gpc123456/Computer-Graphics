@@ -29,13 +29,9 @@ public class AreaFill {
             y = y + 1;
             while (x <= x_right) {
                 span_need_fill = false;
-                while (pixels[y * width + x] == old_color && x < width) {
+                while (pixels[y * width + x] == old_color && x <= x_right) {
                     span_need_fill = true;
                     x++;
-                }
-                if (x == width) {
-                    span_need_fill = false;
-                    break;
                 }
                 if (span_need_fill == true) {
                     p = new Point(x - 1, y);
@@ -50,13 +46,9 @@ public class AreaFill {
             y = y - 2;
             while (x <= x_right) {
                 span_need_fill = false;
-                while (pixels[y * width + x] == old_color && x < width) {
+                while (pixels[y * width + x] == old_color && x <= x_right) {
                     span_need_fill = true;
                     x++;
-                }
-                if (x == width) {
-                    span_need_fill = false;
-                    break;
                 }
                 if (span_need_fill == true) {
                     p = new Point(x - 1, y);
