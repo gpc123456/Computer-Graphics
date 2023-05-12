@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ScanConversion {
-    public void PolygonBoundary(ArrayList<Point> vertices, int[] pixels, int width) {
+    public void PolygonBoundary_ScanLineFill(ArrayList<Point> vertices, int[] pixels, int width) {
         int red = Color.red.getRGB();
         int dy, y, ymax, ymin = 0;
         float dx, x = 0;
@@ -30,7 +30,34 @@ public class ScanConversion {
         }
     }
 
-    public void CircleBoundary(int[] pixels, int CenterX, int CenterY, int r, int width) {
+    public void PolygonBoundary_SeedFill(ArrayList<Point> vertices, int[] pixels, int width) {
+        int color = Color.red.getRGB();
+        for (int i = 0; i < vertices.size() - 1; i++) {
+            int x1, y1, x2, y2;
+            x1 = vertices.get(i).getX();
+            y1 = vertices.get(i).getY();
+            x2 = vertices.get(i + 1).getX();
+            y2 = vertices.get(i + 1).getY();
+
+            int k;
+            float x, y, dx, dy;
+            k = Math.abs(x2 - x1);
+            if (Math.abs(y2 - y1) > k) {
+                k = Math.abs(y2 - y1);
+            }
+            dx = (float) (x2 - x1) / k;
+            dy = (float) (y2 - y1) / k;
+            x = (float) x1;
+            y = (float) y1;
+            for (int j = 0; j < k; j++) {
+                pixels[(int) y * width + (int) x] = color;
+                x += dx;
+                y += dy;
+            }
+        }
+    }
+
+    public void CircleBoundary_SeedFill(int[] pixels, int CenterX, int CenterY, int r, int width) {
         int x, y, d;
         ArrayList<Integer> CirclePlotX = new ArrayList<Integer>();
         ArrayList<Integer> CirclePlotY = new ArrayList<Integer>();
@@ -101,37 +128,11 @@ public class ScanConversion {
         // paint
         int color = Color.red.getRGB();
         for (int i = 0; i < CirclePlotX.size(); i++) {
-            System.out.println(CirclePlotX.get(i));
             int boundary_x;
             int boundary_y;
             boundary_x = CirclePlotX.get(i);
             boundary_y = CirclePlotY.get(i);
             pixels[boundary_y * width + boundary_x] = color;
-        }
-    }
-
-    public void Interior(int height, int width, int[] pixels) {
-        int max_x = width;
-        int min_x = 1;
-        int max_y = height;
-        int min_y = 1;
-        int in_flag = 0;
-        int x, y = 0;
-        int red = Color.red.getRGB();
-        for (y = min_y - 1; y < max_y; y++) {
-            in_flag = 0;
-            for (x = min_x - 1; x < max_x; x++) {
-                if (pixels[y * width + x] == red) {
-                    if (in_flag == 0) {
-                        in_flag = 1;
-                    } else {
-                        in_flag = 0;
-                    }
-                }
-                if (in_flag == 1) {
-                    pixels[y * width + x] = red;
-                }
-            }
         }
     }
 }

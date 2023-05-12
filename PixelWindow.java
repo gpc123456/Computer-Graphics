@@ -58,53 +58,48 @@ class SetPixel extends JPanel {
          */
 
         // ScanConversion
-        ArrayList<Point> points = new ArrayList<Point>();
+        ArrayList<Point> points_star = new ArrayList<Point>();
+        ArrayList<Point> points_rectangle = new ArrayList<Point>();
+        ScanConversion scanconversion = new ScanConversion();
+        int pixels[] = new int[600 * 600];
 
         // Star
-        /*
-         * points.add(new Point(150, 32));
-         * points.add(new Point(179, 116));
-         * points.add(new Point(267, 116));
-         * points.add(new Point(197, 171));
-         * points.add(new Point(222, 256));
-         * points.add(new Point(150, 206));
-         * points.add(new Point(78, 255));
-         * points.add(new Point(102, 171));
-         * points.add(new Point(33, 116));
-         * points.add(new Point(121, 116));
-         * points.add(new Point(150, 32));
-         */
+        points_star.add(new Point(300, 101));
+        points_star.add(new Point(347, 238));
+        points_star.add(new Point(491, 238));
+        points_star.add(new Point(377, 328));
+        points_star.add(new Point(420, 466));
+        points_star.add(new Point(300, 386));
+        points_star.add(new Point(182, 470));
+        points_star.add(new Point(220, 328));
+        points_star.add(new Point(104, 238));
+        points_star.add(new Point(249, 238));
+        points_star.add(new Point(300, 101));
+        scanconversion.PolygonBoundary_SeedFill(points_star, pixels, 600);
 
-        /*
-         * // Rectangle
-         * points.add(new Point(110, 105));
-         * points.add(new Point(150, 105));
-         * points.add(new Point(150, 150));
-         * points.add(new Point(110, 150));
-         * points.add(new Point(110, 105));
-         */
+        // Rectangle
+        points_rectangle.add(new Point(296, 214));
+        points_rectangle.add(new Point(378, 292));
+        points_rectangle.add(new Point(296, 374));
+        points_rectangle.add(new Point(217, 292));
+        points_rectangle.add(new Point(296, 214));
+        scanconversion.PolygonBoundary_SeedFill(points_rectangle, pixels, 600);
 
-        // TextBook
-        points.add(new Point(10, 40));
-        points.add(new Point(30, 20));
-        points.add(new Point(90, 20));
-        points.add(new Point(120, 50));
-        points.add(new Point(120, 110));
-        points.add(new Point(10, 110));
-        points.add(new Point(10, 40));
+        // Circle
+        scanconversion.CircleBoundary_SeedFill(pixels, 300, 300, 230, 600);
 
-        ScanConversion scanconversion = new ScanConversion();
-        int pixels[] = new int[90000];
-        scanconversion.CircleBoundary(pixels, 150, 150, 50, 300);
-        // scanconversion.PolygonBoundary(points, pixels, 300);
-        // ImageProducer ip = new MemoryImageSource(300, 300, pixels, 0, 300);
-        // Image image = createImage(ip);
-        // g.drawImage(image, 0, 0, null);
-
-        // scanconversion.Interior(300, 300, pixels);
+        // Fill
         AreaFill areafill = new AreaFill();
-        areafill.SeedFill(pixels, new Point(150, 150), 300, Color.red.getRGB(), 0, Color.green.getRGB());
-        ImageProducer ip_interior = new MemoryImageSource(300, 300, pixels, 0, 300);
+        // ScanLineFill
+        // areafill.ScanLineFill(300, 300, pixels);
+
+        // SacanLineSandFill
+        areafill.SeedFill(pixels, new Point(300, 75), 600, Color.red.getRGB(), 0, Color.cyan.getRGB());
+        areafill.SeedFill(pixels, new Point(295, 193), 600, Color.red.getRGB(), 0, Color.yellow.getRGB());
+        areafill.SeedFill(pixels, new Point(298, 301), 600, Color.red.getRGB(), 0, Color.green.getRGB());
+
+        // ShowImage
+        ImageProducer ip_interior = new MemoryImageSource(600, 600, pixels, 0, 600);
         Image image_interior = createImage(ip_interior);
         g.drawImage(image_interior, 0, 0, null);
     }
