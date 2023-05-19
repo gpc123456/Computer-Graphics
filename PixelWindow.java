@@ -5,6 +5,7 @@ import com.graphics.DrawLine;
 import com.graphics.Point;
 import com.graphics.ScanConversion;
 import com.graphics.AreaFill;
+import com.graphics.Crop;
 
 import java.util.ArrayList;
 import java.awt.*;
@@ -56,55 +57,62 @@ class SetPixel extends JPanel {
          * g.drawString("Polygon", 500, 600);
          * drawcircle.polygon_arc(g, 500, 500, 100, 25);
          */
+        /*
+         * // ScanConversion
+         * ArrayList<Point> points_star = new ArrayList<Point>();
+         * ArrayList<Point> points_rectangle = new ArrayList<Point>();
+         * ScanConversion scanconversion = new ScanConversion();
+         * int pixels[] = new int[600 * 600];
+         * 
+         * // Star
+         * points_star.add(new Point(300, 101));
+         * points_star.add(new Point(347, 238));
+         * points_star.add(new Point(491, 238));
+         * points_star.add(new Point(377, 328));
+         * points_star.add(new Point(420, 466));
+         * points_star.add(new Point(300, 386));
+         * points_star.add(new Point(182, 470));
+         * points_star.add(new Point(220, 328));
+         * points_star.add(new Point(104, 238));
+         * points_star.add(new Point(249, 238));
+         * points_star.add(new Point(300, 101));
+         * scanconversion.PolygonBoundary_SeedFill(points_star, pixels, 600);
+         * 
+         * // Rectangle
+         * points_rectangle.add(new Point(296, 214));
+         * points_rectangle.add(new Point(378, 292));
+         * points_rectangle.add(new Point(296, 374));
+         * points_rectangle.add(new Point(217, 292));
+         * points_rectangle.add(new Point(296, 214));
+         * scanconversion.PolygonBoundary_SeedFill(points_rectangle, pixels, 600);
+         * 
+         * // Circle
+         * scanconversion.CircleBoundary_SeedFill(pixels, 300, 300, 230, 600);
+         * 
+         * // Fill
+         * AreaFill areafill = new AreaFill();
+         * // ScanLineFill
+         * // areafill.ScanLineFill(300, 300, pixels);
+         * 
+         * // SacanLineSandFill
+         * areafill.SeedFill(pixels, new Point(300, 75), 600, Color.red.getRGB(), 0,
+         * Color.cyan.getRGB());
+         * areafill.SeedFill(pixels, new Point(295, 193), 600, Color.red.getRGB(), 0,
+         * Color.yellow.getRGB());
+         * areafill.SeedFill(pixels, new Point(298, 301), 600, Color.red.getRGB(), 0,
+         * Color.green.getRGB());
+         * 
+         * // ShowImage
+         * ImageProducer ip_interior = new MemoryImageSource(600, 600, pixels, 0, 600);
+         * Image image_interior = createImage(ip_interior);
+         * g.drawImage(image_interior, 0, 0, null);
+         */
 
-        // ScanConversion
-        ArrayList<Point> points_star = new ArrayList<Point>();
-        ArrayList<Point> points_rectangle = new ArrayList<Point>();
-        ScanConversion scanconversion = new ScanConversion();
-        int pixels[] = new int[600 * 600];
-
-        // Star
-        points_star.add(new Point(300, 101));
-        points_star.add(new Point(347, 238));
-        points_star.add(new Point(491, 238));
-        points_star.add(new Point(377, 328));
-        points_star.add(new Point(420, 466));
-        points_star.add(new Point(300, 386));
-        points_star.add(new Point(182, 470));
-        points_star.add(new Point(220, 328));
-        points_star.add(new Point(104, 238));
-        points_star.add(new Point(249, 238));
-        points_star.add(new Point(300, 101));
-        scanconversion.PolygonBoundary_SeedFill(points_star, pixels, 600);
-
-        // Rectangle
-        points_rectangle.add(new Point(296, 214));
-        points_rectangle.add(new Point(378, 292));
-        points_rectangle.add(new Point(296, 374));
-        points_rectangle.add(new Point(217, 292));
-        points_rectangle.add(new Point(296, 214));
-        scanconversion.PolygonBoundary_SeedFill(points_rectangle, pixels, 600);
-
-        // Circle
-        scanconversion.CircleBoundary_SeedFill(pixels, 300, 300, 230, 600);
-
-        // Fill
-        AreaFill areafill = new AreaFill();
-        // ScanLineFill
-        // areafill.ScanLineFill(300, 300, pixels);
-
-        // SacanLineSandFill
-        areafill.SeedFill(pixels, new Point(300, 75), 600, Color.red.getRGB(), 0,
-                Color.cyan.getRGB());
-        areafill.SeedFill(pixels, new Point(295, 193), 600, Color.red.getRGB(), 0,
-                Color.yellow.getRGB());
-        areafill.SeedFill(pixels, new Point(298, 301), 600, Color.red.getRGB(), 0,
-                Color.green.getRGB());
-
-        // ShowImage
-        ImageProducer ip_interior = new MemoryImageSource(600, 600, pixels, 0, 600);
-        Image image_interior = createImage(ip_interior);
-        g.drawImage(image_interior, 0, 0, null);
+        // Crop
+        Crop crop = new Crop(100, 200, 100, 200);
+        g.drawLine(0, 0, 500, 500);
+        g.setColor(Color.red);
+        crop.Sutherland_Cohen(g, 0, 0, 500, 500);
     }
 }
 
