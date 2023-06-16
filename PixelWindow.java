@@ -109,10 +109,55 @@ class SetPixel extends JPanel {
          */
 
         // Crop
-        Crop crop = new Crop(100, 200, 100, 200);
-        g.drawLine(0, 0, 500, 500);
-        g.setColor(Color.red);
-        crop.Sutherland_Cohen(g, 0, 0, 500, 500);
+        Crop crop = new Crop(200, 500, 200, 500);
+
+        // Cohen算法
+        g.setColor(Color.black);
+        g.drawRect(200, 200, 300, 300);
+        g.setColor(Color.pink);
+        g.drawLine(60, 70, 630, 650);
+        g.drawLine(50, 100, 620, 100);
+        g.drawLine(630, 40, 50, 520);
+        g.setColor(Color.blue);
+        crop.Sutherland_Cohen(g, 60, 70, 630, 650);
+        crop.Sutherland_Cohen(g, 50, 100, 620, 100);
+        crop.Sutherland_Cohen(g, 630, 40, 50, 520);
+
+        // Beck算法
+        // 绘制裁剪窗口
+        int ts = 0;
+        int te = 1;
+        int[] xPoints = { 314, 485, 399, 174, 123 };
+        int[] yPoints = { 101, 248, 456, 438, 219 };
+        g.setColor(Color.black);
+        g.drawPolygon(xPoints, yPoints, 5);
+        // 绘制被裁剪直线
+        g.setColor(Color.pink);
+        g.drawLine(75, 403, 479, 152);
+        g.drawLine(75, 19, 498, 93);
+        g.drawLine(133, 95, 505, 463);
+        // 进行裁剪
+        double[][] A = { { 314, 101 }, { 485, 248 }, { 399, 456 }, { 174, 438 }, {
+                123, 219 } };
+        // 计算法向量数组N
+        double[][] N = new double[5][2];
+        for (int i = 0; i < 5; i++) {
+            int next = (i + 1) % 5;
+            double dx = A[next][0] - A[i][0];
+            double dy = A[next][1] - A[i][1];
+            N[i][0] = -dy;
+            N[i][1] = dx;
+        }
+        double[] x1 = { 75 + 1, 479 };
+        double[] y1 = { 403, 152 };
+        double[] x2 = { 75 + 1, 498 };
+        double[] y2 = { 19, 93 };
+        double[] x3 = { 133 + 1, 505 };
+        double[] y3 = { 95, 463 };
+        g.setColor(Color.blue);
+        crop.Cyrus_Beck(g, A, N, x1, y1, ts, te, 5);
+        crop.Cyrus_Beck(g, A, N, x2, y2, ts, te, 5);
+        crop.Cyrus_Beck(g, A, N, x3, y3, ts, te, 5);
     }
 }
 

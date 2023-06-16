@@ -75,4 +75,33 @@ public class Crop {
             g.drawLine(x0, y0, x1, y1);
         }
     }
+
+    public void Cyrus_Beck(Graphics g, double A[][], double N[][], double x[], double y[], double ts, double te,
+            int k) {
+        boolean draw = true;
+        int i;
+        double t, dn, nw;
+        for (i = 0; i < k; i++) {
+            dn = N[i][0] * (x[1] - x[0]) + N[i][1] * (y[1] - y[0]);
+            nw = N[i][0] * (x[0] - A[i][0]) + N[i][1] * (y[0] - A[i][1]);
+            t = -nw / dn;
+            if (dn < 0) {
+                if (t < te) {
+                    te = t;
+                }
+            } else if (t > ts) {
+                ts = t;
+            }
+            if (ts > te) {
+                draw = false;
+            }
+        }
+        if (draw) {
+            double xs = (x[1] - x[0]) * ts + x[0];
+            double ys = (y[1] - y[0]) * ts + y[0];
+            double xe = (x[1] - x[0]) * te + x[0];
+            double ye = (y[1] - y[0]) * te + y[0];
+            g.drawLine((int) xs, (int) ys, (int) xe, (int) ye);
+        }
+    }
 }
